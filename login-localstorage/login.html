@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<!-- Login Form -->
+<div id="loginForm">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+        <button type="button" onclick="login()">Login</button>
+    </form>
+    <br>
+    <a href="registro.html">No tengo cuenta</a>
+
+    <!-- Include SweetAlert2 script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Función para manejar el inicio de sesión
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+           // Verificar si el usuario existe en el localStorage
+            const storedUser = localStorage.getItem(username);
+
+            if (storedUser) {
+                const storedPassword = JSON.parse(storedUser).password;
+                if (password === storedPassword) {
+                    showWelcomeMessage(username);
+                    // Redireccionar a la página de bienvenida o a donde desees
+                    window.location.href = "welcome.html";
+                } else {
+                    showErrorMessage('Invalid password. Please try again.');
+                }
+            } else {
+                showErrorMessage('User not found. Please register.');
+            }
+        }
+
+        // Función para mostrar un mensaje de bienvenida con SweetAlert2
+        function showWelcomeMessage(username) {
+            showSuccessMessage('Welcome, ' + username + '!');
+        }
+
+        // Función para mostrar un mensaje de éxito con SweetAlert2
+        function showSuccessMessage(message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: message,
+            });
+        }
+
+        // Función para mostrar un mensaje de error con SweetAlert2
+        function showErrorMessage(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: message,
+            });
+        }
+    </script>
+</div>
+
+</body>
+</html>
